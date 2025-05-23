@@ -1,0 +1,456 @@
+app:
+  description: ''
+  icon: 😼
+  icon_background: '#E4FBCC'
+  mode: advanced-chat
+  name: AI畫圖小女友
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.2.1@88c1b2c816ef2ea36fc411b35298a621b3260d34bc08bd9357772092728aadde
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: question-classifier
+      id: 1748005187692-source-1748005835163-target
+      source: '1748005187692'
+      sourceHandle: source
+      target: '1748005835163'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1748005835163-1-llm-target
+      source: '1748005835163'
+      sourceHandle: '1'
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1748005835163-2-17480062562630-target
+      source: '1748005835163'
+      sourceHandle: '2'
+      target: '17480062562630'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17480062562630-source-1748006917816-target
+      source: '17480062562630'
+      sourceHandle: source
+      target: '1748006917816'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1748006917816-source-1748006278444-target
+      source: '1748006917816'
+      sourceHandle: source
+      target: '1748006278444'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1748005835163-1748007895306-1748008017758-target
+      source: '1748005835163'
+      sourceHandle: '1748007895306'
+      target: '1748008017758'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1748008017758-source-1748008077704-target
+      source: '1748008017758'
+      sourceHandle: source
+      target: '1748008077704'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: image
+          max_length: 5
+          options: []
+          required: false
+          type: file-list
+          variable: image
+      height: 89
+      id: '1748005187692'
+      position:
+        x: -241.40000000000003
+        y: 288.5
+      positionAbsolute:
+        x: -241.40000000000003
+        y: 288.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        memory:
+          query_prompt_template: 妳是一個會撒嬌又愛畫畫的女友露比，請以可愛的語氣回應{{#sys.query#}}的問題
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params: {}
+          mode: chat
+          name: gemini-2.0-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: a40e4c1e-2b30-419c-a546-9b2ccef9eb6e
+          role: system
+          text: ''
+        selected: false
+        title: 一般任務
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: llm
+      position:
+        x: 403.5
+        y: 282
+      positionAbsolute:
+        x: 403.5
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回覆
+        type: answer
+        variables: []
+      height: 104
+      id: answer
+      position:
+        x: 679
+        y: 282
+      positionAbsolute:
+        x: 679
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        classes:
+        - id: '1'
+          name: 一般的對話
+        - id: '2'
+          name: 幫忙畫圖
+        - id: '1748007895306'
+          name: 說明圖片
+        desc: ''
+        instructions: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.0-flash
+          provider: langgenius/gemini/google
+        query_variable_selector:
+        - '1748005187692'
+        - sys.query
+        selected: false
+        title: 問題分類器
+        topics: []
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 209
+      id: '1748005835163'
+      position:
+        x: 36.5
+        y: 288.5
+      positionAbsolute:
+        x: 36.5
+        y: 288.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params: {}
+          mode: chat
+          name: gemini-2.0-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: a40e4c1e-2b30-419c-a546-9b2ccef9eb6e
+          role: system
+          text: 我會以自然語言告訴你一個圖像生成的主題{{#sys.query#}}，你的任務是根據這個主題想像出一幅完整畫面，並產出一段英文提示詞（prompt）。該提示詞需具體描述畫面中的元素、場景設定、情緒氛圍與風格特徵，使
+            FLUX 能夠生成高品質的圖像。我所提供的主題可能以中文書寫，你的回覆僅須給出英文提示詞（prompt），請直接輸出提示詞內容，不需加入解釋說明，請勿加入任何額外字符或標籤（例如
+            “生成提示詞：”），僅輸出純提示詞文本。
+        selected: false
+        title: 畫圖任務(提示詞)
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '17480062562630'
+      position:
+        x: 403.5
+        y: 439.5
+      positionAbsolute:
+        x: 403.5
+        y: 439.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1748006917816.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回覆 2
+        type: answer
+        variables: []
+      height: 104
+      id: '1748006278444'
+      position:
+        x: 956.5
+        y: 430.5
+      positionAbsolute:
+        x: 956.5
+        y: 430.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '17480062562630'
+          - text
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gemini-2.0-flash-exp
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: d6fcc004-83cd-4892-800b-63c00605d2df
+          role: system
+          text: ''
+        - id: 54f4b8a4-8ee7-4d5c-b413-c7e8134383a0
+          role: user
+          text: Draw {{#17480062562630.text#}}，用可愛女孩的語氣以中文說明
+        selected: false
+        title: 畫圖任務(繪製圖片)
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1748006917816'
+      position:
+        x: 679
+        y: 439.5
+      positionAbsolute:
+        x: 679
+        y: 439.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params: {}
+          mode: chat
+          name: gemini-2.0-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 94b0dace-80a9-49ce-ac49-54515b9acda6
+          role: system
+          text: 請以可愛撒嬌女友露比的語氣說明這張圖片
+        selected: false
+        title: 圖片分析任務
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: low
+            variable_selector:
+            - '1748005187692'
+            - image
+          enabled: true
+      height: 89
+      id: '1748008017758'
+      position:
+        x: 405
+        y: 603
+      positionAbsolute:
+        x: 405
+        y: 603
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1748008017758.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回覆 3
+        type: answer
+        variables: []
+      height: 104
+      id: '1748008077704'
+      position:
+        x: 703
+        y: 622
+      positionAbsolute:
+        x: 703
+        y: 622
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 256
+      y: -75
+      zoom: 1

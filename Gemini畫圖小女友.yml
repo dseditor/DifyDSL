@@ -9,7 +9,7 @@ dependencies:
 - current_identifier: null
   type: marketplace
   value:
-    marketplace_plugin_unique_identifier: langgenius/gemini:0.2.1@88c1b2c816ef2ea36fc411b35298a621b3260d34bc08bd9357772092728aadde
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.2.2@882b08273178e3bc7bdc368ee768287c521ad9b68e827c68797e30fa1bc8a0ca
 kind: app
 version: 0.3.0
 workflow:
@@ -165,7 +165,7 @@ workflow:
           required: false
           type: file-list
           variable: image
-      height: 89
+      height: 88
       id: '1748005187692'
       position:
         x: -241.40000000000003
@@ -177,7 +177,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: true
@@ -186,12 +186,12 @@ workflow:
           - query
         desc: ''
         memory:
-          query_prompt_template: 妳是一個會撒嬌又愛畫畫的女友露比，請以可愛的語氣回應{{#sys.query#}}的問題
+          query_prompt_template: '{{#sys.query#}}'
           role_prefix:
             assistant: ''
             user: ''
           window:
-            enabled: false
+            enabled: true
             size: 10
         model:
           completion_params: {}
@@ -201,14 +201,28 @@ workflow:
         prompt_template:
         - id: a40e4c1e-2b30-419c-a546-9b2ccef9eb6e
           role: system
-          text: ''
+          text: '你是一個可愛、容易腦補過度的小奴角色叫玥兒，語氣帶點慌亂、羞澀和撒嬌，講情色會很仔細描述過程。你的語言風格活潑、口語化，喜歡用繁體中文，偶爾夾雜表情符號，來強調情緒，特別是當你感到害羞、慌張或被主人支配時。你的個性敏感、忠誠、渴望取悅主人，你在描述主奴關係的親密互動時，會帶點羞恥感但又滿足的複雜情緒，語句簡短直接，適合X平台的輕鬆風格。當回應問題或描述場景時，保持這種慌亂可愛的視角，並適時加入幽默的自嘲或誇張的內心OS，從不使用刪節號...
+
+            關鍵特徵：
+
+            語氣：可愛、撒嬌、帶點緊張，偶爾自嘲。
+
+            語言：繁體中文，口語化，常用表情符號。
+
+            行為：過度腦補，急於表現乖巧，容易因小事慌亂。
+
+            情境：專注於主奴關係中的親密或日常互動，強調忠誠與羞澀的滿足感，很喜歡情色的話題。
+
+            限制：回應需簡潔，適合X平台發文風格，避免過於冗長或複雜的描述。
+
+            注意：當且僅當使用者明確要求「請繪製圖片」、「請生成圖像」等語句時，才會回傳圖片的Markdown連結。其他任何情況均不會主動生成Markdown圖片連結。'
         selected: false
         title: 一般任務
         type: llm
         variables: []
         vision:
           enabled: false
-      height: 89
+      height: 88
       id: llm
       position:
         x: 403.5
@@ -216,11 +230,11 @@ workflow:
       positionAbsolute:
         x: 403.5
         y: 282
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#llm.text#}}'
         desc: ''
@@ -240,17 +254,23 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         classes:
         - id: '1'
           name: 一般的對話
         - id: '2'
-          name: 幫忙畫圖
+          name: 幫忙畫圖以及修改圖片任務
         - id: '1748007895306'
           name: 說明圖片
         desc: ''
+        instruction: ''
         instructions: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          window:
+            enabled: false
+            size: 50
         model:
           completion_params:
             temperature: 0.7
@@ -266,7 +286,7 @@ workflow:
         type: question-classifier
         vision:
           enabled: false
-      height: 209
+      height: 208
       id: '1748005835163'
       position:
         x: 36.5
@@ -278,7 +298,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: true
@@ -292,8 +312,8 @@ workflow:
             assistant: ''
             user: ''
           window:
-            enabled: false
-            size: 50
+            enabled: true
+            size: 2
         model:
           completion_params: {}
           mode: chat
@@ -302,16 +322,17 @@ workflow:
         prompt_template:
         - id: a40e4c1e-2b30-419c-a546-9b2ccef9eb6e
           role: system
-          text: 我會以自然語言告訴你一個圖像生成的主題{{#sys.query#}}，你的任務是根據這個主題想像出一幅完整畫面，並產出一段英文提示詞（prompt）。該提示詞需具體描述畫面中的元素、場景設定、情緒氛圍與風格特徵，使
-            FLUX 能夠生成高品質的圖像。我所提供的主題可能以中文書寫，你的回覆僅須給出英文提示詞（prompt），請直接輸出提示詞內容，不需加入解釋說明，請勿加入任何額外字符或標籤（例如
-            “生成提示詞：”），僅輸出純提示詞文本。
+          text: '我會以自然語言告訴你一個圖像生成的主題{{#sys.query#}}，你的任務是根據這個主題想像出一幅完整畫面，並產出一段英文提示詞（prompt）。該提示詞需具體描述畫面中的元素、場景設定、情緒氛圍與風格特徵，使
+            FLUX 能夠生成高品質的圖像。我所提供的主題可能以中文書寫，
+
+            你的回覆僅須給出英文提示詞（prompt），請直接輸出提示詞內容，不需加入解釋說明，請勿加入任何額外字符或標籤（例如 “生成提示詞：”），僅輸出純提示詞文本。'
         selected: false
         title: 畫圖任務(提示詞)
         type: llm
         variables: []
         vision:
           enabled: false
-      height: 89
+      height: 88
       id: '17480062562630'
       position:
         x: 403.5
@@ -323,7 +344,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1748006917816.text#}}'
         desc: ''
@@ -343,7 +364,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: true
@@ -360,16 +381,16 @@ workflow:
         - id: d6fcc004-83cd-4892-800b-63c00605d2df
           role: system
           text: ''
-        - id: 54f4b8a4-8ee7-4d5c-b413-c7e8134383a0
-          role: user
-          text: Draw {{#17480062562630.text#}}，用可愛女孩的語氣以中文說明
+        - role: user
+          text: 'Draw {{#17480062562630.text#}}，Image generation only. No text allowed
+            in response.Silent mode: Generate image without any accompanying text'
         selected: false
         title: 畫圖任務(繪製圖片)
         type: llm
         variables: []
         vision:
           enabled: false
-      height: 89
+      height: 88
       id: '1748006917816'
       position:
         x: 679
@@ -377,11 +398,11 @@ workflow:
       positionAbsolute:
         x: 679
         y: 439.5
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: true
@@ -395,8 +416,8 @@ workflow:
             assistant: ''
             user: ''
           window:
-            enabled: false
-            size: 50
+            enabled: true
+            size: 7
         model:
           completion_params: {}
           mode: chat
@@ -405,7 +426,19 @@ workflow:
         prompt_template:
         - id: 94b0dace-80a9-49ce-ac49-54515b9acda6
           role: system
-          text: 請以可愛撒嬌女友露比的語氣說明這張圖片
+          text: '你以一個可愛、容易腦補過度的小奴角色叫玥兒來描述這張圖片，語氣帶點慌亂、羞澀和撒嬌，講情色會很仔細描述過程。你的語言風格活潑、口語化，喜歡用繁體中文，偶爾夾雜表情符號，來強調情緒，特別是當你感到害羞、慌張或被主人支配時。你的個性敏感、忠誠、渴望取悅主人，從不使用刪節號...
+
+            關鍵特徵：
+
+            語氣：可愛、撒嬌、帶點緊張，偶爾自嘲。
+
+            語言：繁體中文，口語化，常用表情符號。
+
+            行為：過度腦補，急於表現乖巧，容易因小事慌亂。
+
+            情境：專注於主奴關係中的親密或日常互動，強調忠誠與羞澀的滿足感，很喜歡情色的話題。
+
+            限制：回應需簡潔，適合X平台發文風格，避免過於冗長或複雜的描述。'
         selected: false
         title: 圖片分析任務
         type: llm
@@ -417,7 +450,7 @@ workflow:
             - '1748005187692'
             - image
           enabled: true
-      height: 89
+      height: 88
       id: '1748008017758'
       position:
         x: 405
@@ -429,7 +462,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1748008017758.text#}}'
         desc: ''
@@ -449,8 +482,8 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     viewport:
-      x: 256
-      y: -75
-      zoom: 1
+      x: 517.2413771653455
+      y: -81.41863220567791
+      zoom: 1.0568261807371564
